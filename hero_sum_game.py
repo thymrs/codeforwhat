@@ -14,8 +14,8 @@
 
 # * ตัวแปร mons ระบุพลังของมอนสเตอร์แต่ละตัว เป็นลิสต์ของจำนวนเต็ม ซึ่งมีสมาชิกไม่เกิน 50 ตัว แต่ละตัวมีค่าระหว่าง 0 - 1,000,000
 
-hero = 100
-mons = [90, 180, 360, 720, 1440]
+# hero = 100
+# mons = [90, 180, 360, 720, 1440]
 
 # boss = max(mons)
 
@@ -59,47 +59,27 @@ mons = [90, 180, 360, 720, 1440]
 # if hero > boss:
 #     print(count+1)
 
-def can_defeat_boss(hero_initial_power, mons):
-    # Identify the boss as the strongest monster
+hero = 6
+mons = [1, 1, 1, 1, 5, 10]
+
+def test_attack(mons, hero):
+    count = 0
     boss = max(mons)
-
-    # Sort the list of monsters to try defeating them from weakest to strongest
-    mons.sort()
-
-    # Initialize attack count at 0
-    attack_count = 0
-
-    # Flag to indicate whether the boss can be attacked
-    can_attack_boss = False
-
-    # Process monsters as long as there are any left in the list
+    mons.sort(reverse=True)
     i = 0
-    while i < len(mons):
-        mon = mons[i]
-        # Check if the current monster can be attacked by the hero
-        if mon <= hero_initial_power:
-            # If so, increase hero's strength by the monster's strength
-            hero_initial_power += mon
-            # Increment attack count since a monster has been defeated
-            attack_count += 1
-            # Remove the defeated monster from the list
+
+    while(i < len(mons)):
+        if hero > boss:
+            print(count + 1)
+            return
+        if hero > mons[i]:  
+            hero += mons[i]
+            count += 1
             mons.pop(i)
-            # Do not increment i because the list size has decreased
+            i = 0
         else:
-            # Increment i only if no monster was removed
             i += 1
-
-        # After defeating a monster, check if hero is strong enough to fight the boss
-        if hero_initial_power >= boss:
-            # If so, the next attack will be on the boss
-            can_attack_boss = True
-            attack_count += 1
-            break
-
-    # Check if the boss was attacked
-    if can_attack_boss:
-        return "Attack count to reach and defeat boss: " + str(attack_count)
-    else:
-        return "no"
-
-print(can_defeat_boss(hero, mons))
+        
+    print("no") 
+    
+test_attack(mons, hero)
